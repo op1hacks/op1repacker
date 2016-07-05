@@ -3,6 +3,7 @@
 
 import os
 import sys
+import stat
 import lzma
 import shutil
 import struct
@@ -16,8 +17,14 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class OP1Repacker:
-    """Unpack and repack OP1 firmware and other related utilities."""
+class OP1Repack:
+    """Unpack and repack OP-1 firmware and other related utilities."""
+    # TODO:
+    # - Add usage instructions.
+    # - Add proper error handling.
+    # - Do some checks to make sure the fw is ok when unpacking & repacking(?)
+    # - Use argparse for command line usage.
+
     def __init__(self):
         logging.basicConfig(level=logging.DEBUG,
                             format='[%(asctime)s] %(levelname)-8s %(message)s',
@@ -70,23 +77,28 @@ class OP1Repacker:
         return True
 
     def create_temp_file(self):
+        """Create a temporary file for the unpacking procedure and return its path."""
         from_path = os.path.join(self.root_path, self.target_file)
         to_path = os.path.join(self.root_path, self.target_file + self.temp_file_suffix)
         shutil.copy(from_path, to_path)
         return to_path
 
     def unpack(self):
+        """Unpack OP-1 firmware."""
         # TODO: maybe do all this in memory without the temp file
         full_path = os.path.join(self.root_path, self.target_file)
         self.logger.info('Unpacking firmware file: {}'.format(full_path))
         temp_file_path = self.create_temp_file()
+        target_path = os.path.join(self.root_path, os.path.splitext(self.target_file)[0])
         self.remove_crc(temp_file_path)
-        self.uncompress_lzma(temp_file_path)
-        self.uncompress_tar(temp_file_path)
+        self.uncompress_lzma(temp_file_path, temp_file_path)
+        self.uncompress_tar(temp_file_path, target_path)
         os.remove(temp_file_path)
+        self.set_permissions(target_path)
         self.logger.info('Unpacking complete!')
 
     def repack(self):
+        """Repack OP-1 firmware."""
         # TODO: maybe do all this in memory without the temp file
         compress_from = os.path.join(self.root_path, self.target_file)
         compress_to = os.path.join(self.root_path, self.target_file + self.repack_file_suffix)
@@ -127,23 +139,24 @@ class OP1Repacker:
         f.write(bin_crc + data)
         f.close()
 
-    def uncompress_lzma(self, temp_file):
+    def uncompress_lzma(self, target_file, target_path):
+        """Uncompress LZMA target_file contents to target_path."""
         self.logger.info('Uncompressing LZMA...')
-        f = lzma.open(temp_file)
+        f = lzma.open(target_file)
         data = f.read()
         f.close()
-        f = open(temp_file, 'wb')
+        f = open(target_path, 'wb')
         f.write(data)
         f.close()
 
-    def uncompress_tar(self, temp_file):
-        target_path = os.path.join(self.root_path, os.path.splitext(self.target_file)[0])
-        self.logger.info('Uncompressing TAR {}...'.format(temp_file))
-        self.logger.info('Target: {}'.format(target_path))
-        tar = tarfile.open(temp_file)
+    def uncompress_tar(self, target_file, target_path):
+        """Uncompress TAR target_file to target_path."""
+        self.logger.info('Uncompressing TAR to "{}"...'.format(target_path))
+        tar = tarfile.open(target_file)
         tar.extractall(target_path)
 
     def compress_lzma(self, target):
+        """Compress the contents of target with LZMA compression."""
         self.logger.info('Compressing {} with LZMA...'.format(target))
         f = open(target, 'rb')
         data = f.read()
@@ -152,10 +165,10 @@ class OP1Repacker:
         # The OP1 only accepts max 15mb firwmare files. But using agressive compression requires more ram to decompress.
         # When using the most agressive preset 9, the OP1 fails to allocate enough RAM to perform the decompression.
         # I found that these settings work pretty well. FW under 15mb and it installs fine.
-        my_filters = [
+        lzma_filters = [
             {'id': lzma.FILTER_LZMA1, 'preset': 9, 'lc': 3, 'lp': 1, 'pb': 2, 'dict_size': 2**23},
         ]
-        f = lzma.open(target, 'wb', filters=my_filters, format=lzma.FORMAT_ALONE)
+        f = lzma.open(target, 'wb', filters=lzma_filters, format=lzma.FORMAT_ALONE)
         f.write(data)
         f.close()
 
@@ -178,7 +191,22 @@ class OP1Repacker:
             tar.add(file_path, arcname=name, filter=self.tarinfo_reset)
         tar.close()
 
+    def set_permissions(self, target):
+        """Make the unpacked firmware folder readable."""
+        # TODO: does this need to be done on Windows?
+        self.logger.info('Setting access permissions to "{}" ...'.format(target))
+        self.add_dir_permissions(target, stat.S_IEXEC)
+
+    def add_dir_permissions(self, target, flag):
+        """Recursively adds 'flag' permission to all subfolders in target."""
+        for root, dirs, files in os.walk(target):
+            for directory in dirs:
+                path = os.path.join(root, directory)
+                st = os.stat(path)
+                os.chmod(path, st.st_mode | flag)
+                self.add_dir_permissions(path, flag)
+
 
 if __name__ == '__main__':
-    app = OP1Repacker()
+    app = OP1Repack()
     app.run()
