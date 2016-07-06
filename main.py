@@ -94,7 +94,9 @@ class OP1Repack:
         self.uncompress_lzma(temp_file_path, temp_file_path)
         self.uncompress_tar(temp_file_path, target_path)
         os.remove(temp_file_path)
-        self.set_permissions(target_path)
+        # Don't mess with permissions on Windows
+        if os.name != 'nt':
+            self.set_permissions(target_path)
         self.logger.info('Unpacking complete!')
 
     def repack(self):
