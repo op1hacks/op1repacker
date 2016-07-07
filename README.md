@@ -7,10 +7,11 @@ Tool for unpacking and repacking OP1 firmware. *This is a work in progress!*
 
 ## Disclaimer
 
-*Don't use this unless you know exactly what you are doing!*
+**Don't use this unless you know exactly what you are doing!**
 I take no responsibility whatsoever for any damage that might result from using this software.
 You will void your OP-1 waranty and in the worst case brick it using custom firmware.
 Everything you do with this is at your own risk!
+
 
 ## Usage
 
