@@ -17,5 +17,5 @@ Everything you do with this is at your own risk!
 
 ### Unpack & Repack
 
-    python3 main.py unpack [filename]... # Unpack an OP-1 firmware file.
-    python3 main.py repack [directory]   # Repack a directory containing unpacked firmware.
+    python3 main.py unpack [filename]   # Unpack an OP-1 firmware file.
+    python3 main.py repack [directory]  # Repack a directory containing unpacked firmware.
