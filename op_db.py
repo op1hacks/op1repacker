@@ -13,11 +13,12 @@ class OP1DB:
     def open(self, path):
         path = os.path.abspath(path)
         if not os.path.exists(path):
-            raise FileExistsError("Database file doesn't exist.")
+            raise FileNotFoundError("Database file doesn't exist.")
         self.conn = sqlite3.connect(path)
 
     def commit(self):
         self.conn.commit()
+        return True
 
     # TODO: Don't overwrite row if id exists
     def enable_filter(self):

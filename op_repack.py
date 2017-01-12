@@ -60,11 +60,15 @@ class OP1Repack:
         if os.name != 'nt':
             self.set_permissions(target_path)
         self.logger.debug('Unpacking complete!')
+        return True
 
     def repack(self, input_path):
         """Repack OP-1 firmware."""
         # TODO: maybe do all this in memory without the temp file
         path = os.path.abspath(input_path)
+        if not os.path.isdir(path):
+            self.logger.error("Given path isn't a directory: {}".format(input_path))
+            return False
         root_path = os.path.dirname(path)
         target_file = os.path.basename(input_path)
         compress_from = os.path.join(root_path, target_file)
@@ -74,6 +78,7 @@ class OP1Repack:
         self.compress_lzma(compress_to)
         self.add_crc(compress_to)
         self.logger.debug('Repacking complete!')
+        return True
 
     def remove_crc(self, path):
         """Remove the first 4 bytes of the firmware which contain the CRC-32 checksum."""

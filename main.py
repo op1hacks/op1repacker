@@ -30,13 +30,17 @@ if __name__ == '__main__':
 
     if args.action == 'repack':
         print('Repacking {}...'.format(args.path[0]))
-        repacker.repack(args.path[0])
-        print('Done!')
+        if repacker.repack(args.path[0]):
+            print('Done!')
+        else:
+            print('Errors occured during repacking!')
 
     elif args.action == 'unpack':
         print('Unpacking {}...'.format(args.path[0]))
-        repacker.unpack(args.path[0])
-        print('Done!')
+        if repacker.unpack(args.path[0]):
+            print('Done!')
+        else:
+            print('Errors occured during unpacking!')
 
     elif args.action == 'modify':
         if args.options:
@@ -51,7 +55,9 @@ if __name__ == '__main__':
                 print('Enabling "filter" effect...')
                 if not db.enable_filter():
                     print('Failed to enable "filter". Maybe it\'s already enabled?')
-            db.commit()
-            print('Done!')
+            if db.commit():
+                print('Done!')
+            else:
+                print('Errors occured!')
         else:
             print('Please specify what modifications to make with --options argument.')
