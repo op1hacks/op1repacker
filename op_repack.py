@@ -149,6 +149,8 @@ class OP1Repack:
         files = os.listdir(path)
         tar = tarfile.open(target, 'w')
         for file in files:
+            if file.startswith('.'):
+                continue
             file_path = os.path.join(path, file)
             self.logger.debug('Adding "{}" to archive.'.format(file_path))
             # Remove the subfolder name so that the archive won't contain the subfolder.

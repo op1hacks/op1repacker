@@ -18,7 +18,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Unpack and repack OP-1 firmware in order to create custom firmware.\
                                                   Use at your own risk! Custom firmware will void your warranty and\
                                                   may brick your OP-1.')
-    parser.add_argument('action', choices=['unpack', 'modify', 'repack', 'detect'],
+    parser.add_argument('action', choices=['unpack', 'modify', 'repack'],
                         help='action that should be performed on the firmware')
     parser.add_argument('path', type=str, nargs=1, help='file or dir to unpack or repack')
     parser.add_argument('--options', nargs='+', help='list modifications to make on the firmware')
