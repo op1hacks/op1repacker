@@ -32,3 +32,8 @@ To do that first unpack the firmware, then run the following command and then re
     python3 main.py modify [directory] --options filter iter
 
 Other modifications might be added later.
+
+## Contributing
+
+If you wan't to participate please submit issues and pull requests to github. Pull requests should be opened against the `dev` branch.
+I like to only push tested new versions to master.
