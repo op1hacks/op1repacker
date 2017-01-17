@@ -7,6 +7,8 @@ Change Log
 **Implemented enhancements:**
 
 - Added `modify` mode for enabling `filter` and `iter`.
+- Added some error checking and handling.
+- Restructured the code.
 
 **Fixed bugs:**
 
