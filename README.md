@@ -3,7 +3,7 @@
 Tool for unpacking and repacking OP1 firmware. *This is a work in progress!*
 
  - Requires Python3
- - Tested on Linux and OS X
+ - Tested on Linux, OS X and Windows 10
 
 ## Disclaimer
 
