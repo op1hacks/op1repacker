@@ -1,6 +1,6 @@
 # OP-1 Firmware Repacker
 
-Tool for unpacking and repacking OP1 firmware. *This is a work in progress!*
+Tool for unpacking and repacking OP1 firmware.
 
  - Requires Python3
  - Tested on Linux, OS X and Windows 10

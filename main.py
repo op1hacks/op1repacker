@@ -16,14 +16,18 @@ __version__ = '0.1.0'
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Unpack and repack OP-1 firmware in order to create custom firmware.\
+                                                  Enable hidden features like the \'iter\' synth and \'filter\' effect.\
                                                   Use at your own risk! Custom firmware will void your warranty and\
                                                   may brick your OP-1.')
     parser.add_argument('action', choices=['unpack', 'modify', 'repack'],
-                        help='action that should be performed on the firmware')
-    parser.add_argument('path', type=str, nargs=1, help='file or dir to unpack or repack')
-    parser.add_argument('--options', nargs='+', help='list modifications to make on the firmware')
+                        help='action to perform on the firmware')
+    parser.add_argument('path', type=str, nargs=1, help='file to unpack or directory repack')
+    parser.add_argument('--options', nargs='+',
+                        help='modifications to make on the unpacked firmware, valid values are \'iter\' and/or\
+                             \'filter\' to enable the hidden features.')
     parser.add_argument('--debug', action='store_true', help='print debug messages')
-    parser.add_argument('--version', action='version', version=__version__)
+    parser.add_argument('--version', action='version', version=__version__,
+                        help='show program\'s version number and exit')
     args = parser.parse_args()
 
     repacker = op_repack.OP1Repack(debug=args.debug)
