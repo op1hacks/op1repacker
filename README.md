@@ -5,6 +5,7 @@ Tool for unpacking and repacking OP1 firmware.
  - Requires Python3
  - Tested on Linux, OS X and Windows 10
 
+
 ## Disclaimer
 
 **Don't use this unless you know exactly what you are doing!**
@@ -24,14 +25,34 @@ The firmware is unpacked to a new folder in the same location as the firmware fi
 If you unpack the firmware file 'op1_218.op1' at '/home/user/op1/' you'll get a folder '/home/user/op1/op1_218/' containing the unpacked files.
 The same logic works for repacking, the new firmware file is saved in the same location, but the name will be 'op1_218-repacked.op1'.
 
+
 ### Modify
 
-The firmware can be automatically modified to include the 'filter' effect and 'iter' synth.
-To do that first unpack the firmware, then run the following command and then repack the firmware.
+The firmware can be automatically modified with some predefined mods.
+These have been tested on the firmware version 225.
+Currently available mods are:
 
-    python3 main.py modify [directory] --options filter iter
+ - iter
+ > Enable the hidden iter synth
 
-Other modifications might be added later.
+ - filter
+ > Enable the hidden filter effect
+
+ - subtle-fx
+ > Lower the default intensity of effects. This allows you to turn effects on without affecting the sound too much.
+ > You can then turn them up as you like. This helps with live performances and avoids a sudden change to the sound
+ > when an effect is enabled.
+
+To enable a mod first unpack the firmware, then run the following command (replace mod_name with the mod you want) and repack the firmware after that.
+
+    python3 main.py modify [directory] --options mod_name
+
+For example to enable all mods run this command:
+
+    python3 main.py modify [directory] --options iter filter subtle-fx
+
+More modifications might be added later.
+
 
 ## Contributing
 
