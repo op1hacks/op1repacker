@@ -22,7 +22,7 @@ may brick your OP-1.
 """
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('action', choices=['unpack', 'modify', 'repack'],
                         help='action to perform on the firmware')
@@ -74,3 +74,7 @@ if __name__ == '__main__':
                 print('Errors occured!')
         else:
             print('Please specify what modifications to make with --options argument.')
+
+
+if __name__ == '__main__':
+    main()
