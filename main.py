@@ -14,7 +14,7 @@ __status__ = 'Development'
 __version__ = '0.1.0'
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='Unpack and repack OP-1 firmware in order to create custom firmware.\
                                                   Enable hidden features like the \'iter\' synth and \'filter\' effect.\
                                                   Use at your own risk! Custom firmware will void your warranty and\
@@ -65,3 +65,7 @@ if __name__ == '__main__':
                 print('Errors occured!')
         else:
             print('Please specify what modifications to make with --options argument.')
+
+
+if __name__ == '__main__':
+    main()
