@@ -11,7 +11,7 @@ if test "$version" = ""; then
 fi
 
 # Bump the version via regexp
-sed -E "s/^(__version__ = \')[0-9]+\.[0-9]+\.[0-9]+(\')$/\1$version\2/" main.py --in-place
+sed -E "s/^(__version__ = ')[0-9]+\.[0-9]+\.[0-9]+(')$/\1$version\2/" main.py --in-place
 
 # Verify our version made it into the file
 if ! grep "$version" main.py &> /dev/null; then
