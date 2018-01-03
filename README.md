@@ -57,6 +57,10 @@ Currently available mods are:
  > This helps with live performances and avoids a sudden change to the sound
  > when an effect is enabled.
 
+ - iter-gfx-lab
+ > Add custom lab themed visuals to the iter synth.
+
+
 To enable a mod first unpack the firmware, then run the following command
 (replace mod_name with the mod you want) and repack the firmware after that.
 
@@ -64,7 +68,7 @@ To enable a mod first unpack the firmware, then run the following command
 
 For example to enable all mods run this command:
 
-    op1repacker modify [directory] --options iter filter subtle-fx
+    op1repacker modify [directory] --options iter filter subtle-fx iter-gfx-lab
 
 More modifications might be added later.
 

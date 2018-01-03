@@ -3,9 +3,11 @@
 
 import os
 import argparse
+from shutil import copyfile
 
 import op_db
 import op_repack
+
 
 __author__ = 'Richard Lewis'
 __copyright__ = 'Copyright 2016, Richard Lewis'
@@ -29,13 +31,17 @@ def main():
     parser.add_argument('path', type=str, nargs=1, help='file to unpack or directory repack')
     parser.add_argument('--options', nargs='+',
                         help='modifications to make on the unpacked firmware, valid values are \'iter\' \
-                             \'filter\' \'subtle-fx\' and  to enable mods and the hidden features.')
+                             \'filter\' \'subtle-fx\' and \'iter-gfx-lab\' to enable mods and the hidden features.')
     parser.add_argument('--debug', action='store_true', help='print debug messages')
     parser.add_argument('--version', action='version', version=__version__,
                         help='show program\'s version number and exit')
     args = parser.parse_args()
 
     repacker = op_repack.OP1Repack(debug=args.debug)
+
+    # Path to the app location (NOT the firmware path)
+    app_path = os.path.dirname(os.path.realpath(__file__))
+    db_actions = ['iter', 'filter', 'subtle-fx']
 
     if args.action == 'repack':
         print('Repacking {}...'.format(args.path[0]))
@@ -52,7 +58,12 @@ def main():
             print('Errors occured during unpacking!')
 
     elif args.action == 'modify':
-        if args.options:
+        if not args.options:
+            print('Please specify what modifications to make with --options argument.')
+            return
+
+        # Only open the database for changes if at least one DB mod is selected
+        if set(db_actions) - (set(db_actions) - set(args.options)):
             db_path = os.path.abspath(os.path.join(args.path[0], 'content', 'op1_factory.db'))
             db = op_db.OP1DB()
             db.open(db_path)
@@ -69,11 +80,16 @@ def main():
                 if not db.enable_subtle_fx_defaults():
                     print('Failed to modify default parameters for effects!')
             if db.commit():
-                print('Done!')
+                print('Database modifications done!')
             else:
-                print('Errors occured!')
-        else:
-            print('Please specify what modifications to make with --options argument.')
+                print('Errors occured while modifying database!')
+
+        # Custom GFX
+        if 'iter-gfx-lab' in args.options:
+            print('Enabling custom lab graphic for iter...')
+            path_from = os.path.join(app_path, 'assets', 'display', 'iter-lab.svg')
+            path_to = os.path.abspath(os.path.join(args.path[0], 'content', 'display', 'iter.svg'))
+            copyfile(path_from, path_to)
 
 
 if __name__ == '__main__':

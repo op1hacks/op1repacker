@@ -5,10 +5,11 @@ from setuptools import setup
 
 version = re.search(
     "^__version__\s*=\s*'([^']*)'",
-    open("main.py").read(),
+    open("op1repacker/main.py").read(),
     re.M
     ).group(1)
 
+files = ["assets/display/*.svg"]
 
 setup(name="op1repacker",
       version=version,
@@ -16,9 +17,10 @@ setup(name="op1repacker",
       author="Richard Lewis",
       author_email="richrd.lewis@gmail.com",
       url="https://github.com/op1hacks/op1repacker/",
-      packages=["."],
+      packages=["op1repacker"],
+      package_data={"": files},
       entry_points={
-          "console_scripts": ["op1repacker=main:main"]
+          "console_scripts": ["op1repacker=op1repacker.main:main"]
       },
       classifiers=[]
       )
