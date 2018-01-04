@@ -20,7 +20,7 @@ if ! grep "$version" op1repacker/main.py &> /dev/null; then
 fi
 
 # Commit the change
-git add main.py
+git add op1repacker/main.py
 git commit -a -m "Release $version"
 
 # Tag the release
