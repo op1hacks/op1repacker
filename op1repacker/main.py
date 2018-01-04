@@ -46,6 +46,10 @@ def main():
     # Path to the firmware file or directory
     target_path = args.path[0]
 
+    if not os.path.exists(target_path):
+        print('The specified path doesn\'t exist!')
+        return
+
     # Repack
     if args.action == 'repack':
         if not os.path.isdir(target_path):
