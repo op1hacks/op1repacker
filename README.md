@@ -9,6 +9,10 @@ be automatically applied. Currently four mods are available: `iter`, `filter`,
  - Requires Python3
  - Tested on Linux, OS X and Windows 10
 
+![Filter Effect](https://raw.githubusercontent.com/op1hacks/op1repacker/master/images/filter.png)
+![Original Iter Graphic](https://raw.githubusercontent.com/op1hacks/op1repacker/master/images/iter.png)
+![Custom Iter Graphic](https://raw.githubusercontent.com/op1hacks/op1repacker/master/images/iter-lab.png)
+
 
 ## Disclaimer
 
