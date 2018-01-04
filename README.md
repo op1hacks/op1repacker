@@ -3,8 +3,8 @@
 The tool for unpacking and repacking OP1 firmware. This allows you to access and
 modify the files within the firmware as well as repackaging the files into a
 valid installable firmware file. The tool also includes some mods that can
-be automatically applied. Currently three mods are available: `iter`, `filter`
-and `subtle-fx`. See below for more information.
+be automatically applied. Currently four mods are available: `iter`, `filter`,
+`subtle-fx` and `iter-gfx-lab`. See below for more information.
 
  - Requires Python3
  - Tested on Linux, OS X and Windows 10
