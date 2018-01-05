@@ -23,9 +23,18 @@ Use at your own risk! Custom firmware will void your warranty and
 may brick your OP-1.
 """
 
+help = """modifications to make on the unpacked firmware to enanable mods and hidden features
+valid values are:
+- iter
+- filter
+- subtle-fx
+- iter-gfx-lab
+- cwo-moose
+"""
+
 
 def main():
-    parser = argparse.ArgumentParser(description=description)
+    parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('action', choices=['unpack', 'modify', 'repack'],
                         help='action to perform on the firmware')
     parser.add_argument('path', type=str, nargs=1, help='file to unpack or directory repack')
