@@ -5,8 +5,8 @@ import os
 import argparse
 from shutil import copyfile
 
-import op_db
-import op_repack
+from . import op_db
+from . import op_repack
 
 
 __author__ = 'Richard Lewis'
