@@ -18,13 +18,13 @@ be automatically applied. Currently four mods are available: `iter`, `filter`,
 
 **Don't use this unless you know exactly what you are doing!**
 I take no responsibility whatsoever for any damage that might result from using
-this software. You will void your OP-1 waranty and in the worst case brick it
+this software. You will void your OP-1 warranty and in the worst case brick it
 using custom firmware. Everything you do with this is at your own risk!
 
 
 ## Installation
 
-To install op1repacker run the following command:
+To install `op1repacker` run the following command:
 
     sudo pip3 install op1repacker
 
@@ -65,12 +65,12 @@ Currently available mods are:
  > Add custom lab themed visuals to the iter synth.
 
 
-To enable a mod first unpack the firmware, then run the following command
+To enable a mod, first unpack the firmware, then run the following command
 (replace mod_name with the mod you want) and repack the firmware after that.
 
     op1repacker modify [directory] --options mod_name
 
-For example to enable all mods run this command:
+For example, to enable all mods run this command:
 
     op1repacker modify [directory] --options iter filter subtle-fx iter-gfx-lab
 
@@ -83,6 +83,5 @@ If you want to participate please submit issues and pull requests to GitHub.
 Pull requests should be opened against the `dev` branch. I like to only push
 tested new versions to master. You can also let me know of possible mods you
 would like to see by openning a new issue and describing the mod. Keep in
-mind that new features can't be added. Only changes to what's already in the
+mind that new features can't be added - only changes to what's already in the
 firmware are possible.
-
