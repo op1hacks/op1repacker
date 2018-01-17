@@ -61,8 +61,14 @@ Currently available mods are:
  > This helps with live performances and avoids a sudden change to the sound
  > when an effect is enabled.
 
- - iter-gfx-lab
+ - gfx-iter-lab
  > Add custom lab themed visuals to the iter synth.
+
+ - gfx-tape-invert
+ > Move the tracks to the top in the tape screen to make them easier to see.
+
+ - gfx-cwo-moose
+ > Swap the cow in the CWO effect with a moose.
 
 
 To enable a mod first unpack the firmware, then run the following command

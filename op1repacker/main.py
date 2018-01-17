@@ -6,6 +6,7 @@ import argparse
 from shutil import copyfile
 
 from . import op_db
+from . import op_gfx
 from . import op_repack
 
 
@@ -28,8 +29,9 @@ valid values are:
 - iter
 - filter
 - subtle-fx
-- iter-gfx-lab
-- cwo-moose
+- gfx-iter-lab
+- gfx-cwo-moose
+- gfx-tape-invert
 """
 
 
@@ -38,9 +40,7 @@ def main():
     parser.add_argument('action', choices=['unpack', 'modify', 'repack'],
                         help='action to perform on the firmware')
     parser.add_argument('path', type=str, nargs=1, help='file to unpack or directory repack')
-    parser.add_argument('--options', nargs='+',
-                        help='modifications to make on the unpacked firmware, valid values are \'iter\' \
-                             \'filter\' \'subtle-fx\' and \'iter-gfx-lab\' to enable mods and the hidden features.')
+    parser.add_argument('--options', nargs='+', help=help)
     parser.add_argument('--debug', action='store_true', help='print debug messages')
     parser.add_argument('--version', action='version', version=__version__,
                         help='show program\'s version number and exit')
@@ -120,11 +120,25 @@ def main():
                 print('Errors occured while modifying database!')
 
         # Custom GFX
-        if 'iter-gfx-lab' in args.options:
-            print('Enabling custom lab graphic for iter...')
-            path_from = os.path.join(app_path, 'assets', 'display', 'iter-lab.svg')
-            path_to = os.path.abspath(os.path.join(target_path, 'content', 'display', 'iter.svg'))
-            copyfile(path_from, path_to)
+        gfx_mods = filter(lambda opt: opt.startswith('gfx-'), args.options)
+        for mod in gfx_mods:
+            if 'gfx-iter-lab' in args.options:
+                print('Enabling custom lab graphic for iter...')
+                path_from = os.path.join(app_path, 'assets', 'display', 'iter-lab.svg')
+                path_to = os.path.abspath(os.path.join(target_path, 'content', 'display', 'iter.svg'))
+                copyfile(path_from, path_to)
+            else:
+                patch_name = mod[4:]
+                patch_path = os.path.join(app_path, 'assets', 'display', patch_name + '.patch.json')
+                print(patch_path)
+                if not os.path.exists(patch_path):
+                    print('GFX patch "{}" doesn\'t exist!'.format(patch_name))
+                    continue
+
+                print('Applying GFX patch "{}"...'.format(patch_name))
+                result = op_gfx.patch_image_file(target_path, patch_path)
+                if not result:
+                    print('Failed to apply patch! Maybe the patch is already applied?')
 
         print('Done.')
 

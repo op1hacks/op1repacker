@@ -9,7 +9,10 @@ version = re.search(
     re.M
     ).group(1)
 
-files = ["assets/display/*.svg"]
+files = [
+    "assets/display/*.svg",
+    "assets/display/*.json"
+]
 
 setup(name="op1repacker",
       version=version,
@@ -19,6 +22,9 @@ setup(name="op1repacker",
       url="https://github.com/op1hacks/op1repacker/",
       packages=["op1repacker"],
       package_data={"": files},
+      install_requires=[
+          "svg.path",
+      ],
       entry_points={
           "console_scripts": ["op1repacker=op1repacker.main:main"]
       },
