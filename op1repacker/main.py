@@ -122,7 +122,7 @@ def main():
         # Custom GFX
         gfx_mods = filter(lambda opt: opt.startswith('gfx-'), args.options)
         for mod in gfx_mods:
-            if 'gfx-iter-lab' in args.options:
+            if mod == 'gfx-iter-lab':
                 print('Enabling custom lab graphic for iter...')
                 path_from = os.path.join(app_path, 'assets', 'display', 'iter-lab.svg')
                 path_to = os.path.abspath(os.path.join(target_path, 'content', 'display', 'iter.svg'))
@@ -130,7 +130,6 @@ def main():
             else:
                 patch_name = mod[4:]
                 patch_path = os.path.join(app_path, 'assets', 'display', patch_name + '.patch.json')
-                print(patch_path)
                 if not os.path.exists(patch_path):
                     print('GFX patch "{}" doesn\'t exist!'.format(patch_name))
                     continue

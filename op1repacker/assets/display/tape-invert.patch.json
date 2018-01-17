@@ -29,6 +29,7 @@
                 ["circle", "loopin"],
                 ["circle", "loopout"],
                 ["line", "loop_x5F_line"],
+                ["line", "track_x5F_active"],
                 ["line", "track_x5F_semiactive_15_"],
                 ["line", "track_x5F_inactive"],
                 ["line", "_x3C_Path_x3E__1_"]
