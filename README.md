@@ -3,7 +3,7 @@
 The tool for unpacking and repacking OP1 firmware. This allows you to access and
 modify the files within the firmware as well as repackaging the files into a
 valid installable firmware file. The tool also includes some mods that can
-be automatically applied. See [Modify](#Modify) below for more information.
+be automatically applied. See [Modify](#modify) below for more information.
 
  - Requires Python3
  - Tested on Linux, OS X and Windows 10
@@ -43,7 +43,7 @@ The same logic works for repacking, the new firmware file is saved in the same
 location, but the name will be `op1_218-repacked.op1`.
 
 
-(###Modify)
+(###modify)
 
 The firmware can be automatically modified with some predefined mods.
 These have been tested on the firmware version 225.
