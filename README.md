@@ -43,7 +43,7 @@ The same logic works for repacking, the new firmware file is saved in the same
 location, but the name will be `op1_218-repacked.op1`.
 
 
-(###modify)
+### Modify
 
 The firmware can be automatically modified with some predefined mods.
 These have been tested on the firmware version 225.
