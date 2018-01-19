@@ -1,0 +1,35 @@
+{
+    "file": "tape.svg",
+    "changes": [
+        {
+            "type": "substitute",
+            "find": "\n",
+            "replace": " "
+        },
+        {
+            "type": "substitute",
+            "find": "\t",
+            "replace": " "
+        },
+        {
+            "type": "move_all",
+            "delta": [0, 31]
+        },
+        {
+            "type": "move_elements",
+            "elements": [
+                ["line", "centerline_23_"],
+                ["g", "grid"],
+                ["line", "ghost_x5F_line"],
+                ["circle", "loopin"],
+                ["circle", "loopout"],
+                ["line", "loop_x5F_line"],
+                ["line", "track_x5F_active"],
+                ["line", "track_x5F_semiactive_15_"],
+                ["line", "track_x5F_inactive"],
+                ["line", "_x3C_Path_x3E__1_"]
+            ],
+            "delta": [0, -147]
+        }
+    ]
+}

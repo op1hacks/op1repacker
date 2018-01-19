@@ -10,8 +10,9 @@ be automatically applied. Currently four mods are available: `iter`, `filter`,
  - Tested on Linux, OS X and Windows 10
 
 ![Filter Effect](https://raw.githubusercontent.com/op1hacks/op1repacker/master/images/filter.png)
-![Original Iter Graphic](https://raw.githubusercontent.com/op1hacks/op1repacker/master/images/iter.png)
 ![Custom Iter Graphic](https://raw.githubusercontent.com/op1hacks/op1repacker/master/images/iter-lab.png)
+![Tape Invert](https://raw.githubusercontent.com/op1hacks/op1repacker/master/images/tape-invert.png)
+![CWO Moose](https://raw.githubusercontent.com/op1hacks/op1repacker/master/images/cwo-moose.png)
 
 
 ## Disclaimer
@@ -61,8 +62,14 @@ Currently available mods are:
  > This helps with live performances and avoids a sudden change to the sound
  > when an effect is enabled.
 
- - iter-gfx-lab
+ - gfx-iter-lab
  > Add custom lab themed visuals to the iter synth.
+
+ - gfx-tape-invert
+ > Move the tracks to the top in the tape screen to make them easier to see.
+
+ - gfx-cwo-moose
+ > Swap the cow in the CWO effect with a moose.
 
 
 To enable a mod, first unpack the firmware, then run the following command
