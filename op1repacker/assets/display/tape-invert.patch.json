@@ -8,11 +8,6 @@
         },
         {
             "type": "substitute",
-            "find": "<g id=\"static\"",
-            "replace": "<rect id=\"bg\" width=\"320\" height=\"160\"/><g id=\"static\""
-        },
-        {
-            "type": "substitute",
             "find": "\t",
             "replace": " "
         },
