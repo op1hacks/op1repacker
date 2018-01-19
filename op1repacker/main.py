@@ -14,7 +14,7 @@ __author__ = 'Richard Lewis'
 __copyright__ = 'Copyright 2016, Richard Lewis'
 __license__ = 'MIT'
 __status__ = 'Development'
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 
 description = """
