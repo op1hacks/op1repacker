@@ -49,26 +49,31 @@ The firmware can be automatically modified with some predefined mods.
 These have been tested on the firmware version 225.
 Currently available mods are:
 
- - iter
- > Enable the hidden iter synth
+ * iter
 
- - filter
- > Enable the hidden filter effect
+   > Enable the hidden iter synth
 
- - subtle-fx
- > Lower the default intensity of effects. This allows you to turn effects on
- > without affecting the sound too much. You can then turn them up as you like.
- > This helps with live performances and avoids a sudden change to the sound
- > when an effect is enabled.
+ * filter
+   > Enable the hidden filter effect
 
- - gfx-iter-lab
- > Add custom lab themed visuals to the iter synth.
+ * subtle-fx
 
- - gfx-tape-invert
- > Move the tracks to the top in the tape screen to make them easier to see.
+   > Lower the default intensity of effects. This allows you to turn effects on
+   > without affecting the sound too much. You can then turn them up as you like.
+   > This helps with live performances and avoids a sudden change to the sound
+   > when an effect is enabled.
 
- - gfx-cwo-moose
- > Swap the cow in the CWO effect with a moose.
+ * gfx-iter-lab
+
+   > Add custom lab themed visuals to the iter synth.
+
+ * gfx-tape-invert
+
+   > Move the tracks to the top in the tape screen to make them easier to see.
+
+ * gfx-cwo-moose
+
+   > Swap the cow in the CWO effect with a moose.
 
 
 To enable a mod, first unpack the firmware, then run the following command
