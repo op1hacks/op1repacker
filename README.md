@@ -1,9 +1,11 @@
 # OP-1 Firmware Repacker
 
-*The* tool for unpacking and repacking OP1 firmware. This allows you to access and
-modify the files within the firmware as well as repackaging the files into a
-valid installable firmware file. The tool also includes some mods that can
-be automatically applied. See [Modify](#modify) below for more information.
+*The* tool for unpacking and repacking OP-1 synthesizer firmware. It's based on
+the collective research we've done at the [operator-1.com custom firmware thread](https://www.operator-1.com/index.php?p=/discussion/2232/custom-firmware-on-the-op-1). This allows you to access and
+modify the files within the firmware as well as repacking the files into a
+valid installable firmware file. The tool also includes some modifications that
+can be automatically applied to the firmware. See [Modify](#modify) below for
+more information.
 
  - Requires Python3
  - Tested on Linux, OS X and Windows 10
