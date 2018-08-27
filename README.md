@@ -1,6 +1,6 @@
 # OP-1 Firmware Repacker
 
-The tool for unpacking and repacking OP1 firmware. This allows you to access and
+*The* tool for unpacking and repacking OP1 firmware. This allows you to access and
 modify the files within the firmware as well as repackaging the files into a
 valid installable firmware file. The tool also includes some mods that can
 be automatically applied. See [Modify](#modify) below for more information.
