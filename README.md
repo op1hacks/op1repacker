@@ -55,7 +55,12 @@ Currently available mods are:
 
    > Enable the hidden iter synth
 
+ * presets-iter
+
+   > Add community presets from [op1.fun](http://op1.fun) to the iter synth
+
  * filter
+
    > Enable the hidden filter effect
 
  * subtle-fx
@@ -78,6 +83,7 @@ Currently available mods are:
    > Swap the cow in the CWO effect with a moose.
 
 
+
 To enable a mod, first unpack the firmware, then run the following command
 (replace mod_name with the mod you want and [directory] with the location
 of the unpacked firmware) and repack the firmware after that.
@@ -86,7 +92,7 @@ of the unpacked firmware) and repack the firmware after that.
 
 For example, to enable all mods run this command:
 
-    op1repacker modify [directory] --options iter filter subtle-fx gfx-iter-lab gfx-tape-invert gfx-cwo-moose
+    op1repacker modify [directory] --options iter presets-iter filter subtle-fx gfx-iter-lab gfx-tape-invert gfx-cwo-moose
 
 More modifications might be added later.
 

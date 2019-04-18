@@ -73,3 +73,15 @@ class OP1DB:
 
     def set_fx_default_params(self, fx_type, params):
         self.conn.execute('UPDATE fx_types SET default_params=? WHERE type=?', (params, fx_type))
+
+    def synth_preset_folder_exists(self, synth_type):
+        # Check if there are any synth presets under the folder synth_type
+        out = self.conn.execute('SELECT * FROM synth_presets WHERE folder=?', (synth_type, ))
+        results = out.fetchall()
+        if results:
+            return True
+        return False
+
+    def insert_synth_preset(self, patch, folder):
+        self.conn.execute('INSERT INTO synth_presets (patch, folder) VALUES (?, ?)', (patch, folder))
+        return True
