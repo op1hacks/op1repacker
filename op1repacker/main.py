@@ -6,10 +6,10 @@ import json
 import argparse
 from shutil import copyfile
 
-from . import op_db
-from . import op_gfx
-from . import op_patches
-from . import op_repack
+from . import op1_db
+from . import op1_gfx
+from . import op1_patches
+from . import op1_repack
 
 
 __author__ = 'Richard Lewis'
@@ -49,7 +49,7 @@ def main():
                         help='show program\'s version number and exit')
     args = parser.parse_args()
 
-    repacker = op_repack.OP1Repack(debug=args.debug)
+    repacker = op1_repack.OP1Repack(debug=args.debug)
 
     # Path to the app location (NOT the firmware path)
     app_path = os.path.dirname(os.path.realpath(__file__))
@@ -102,7 +102,7 @@ def main():
         # Only open the database for changes if at least one DB mod is selected
         if set(db_actions) - (set(db_actions) - set(args.options)):
             db_path = os.path.abspath(os.path.join(target_path, 'content', 'op1_factory.db'))
-            db = op_db.OP1DB()
+            db = op1_db.OP1DB()
             db.open(db_path)
 
             print("Running database modifications:")
@@ -116,7 +116,7 @@ def main():
                 print('- Adding community presets for iter:')
                 if not db.synth_preset_folder_exists('iter'):
                     iter_preset_path = os.path.join(app_path, 'assets', 'presets', 'iter')
-                    patches = op_patches.load_patch_folder(iter_preset_path)
+                    patches = op1_patches.load_patch_folder(iter_preset_path)
 
                     for patch in patches:
                         print('    - ' + patch['name'])
@@ -159,7 +159,7 @@ def main():
                     continue
 
                 print('- Applying GFX patch "{}"...'.format(patch_name))
-                result = op_gfx.patch_image_file(target_path, patch_path)
+                result = op1_gfx.patch_image_file(target_path, patch_path)
                 if not result:
                     print('    Failed to apply patch! Maybe the patch is already applied?')
 
