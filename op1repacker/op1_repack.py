@@ -14,8 +14,7 @@ import binascii
 class OP1Repack:
     """Unpack and repack OP-1 firmware and other related utilities."""
     # TODO:
-    # - Add proper error handling.
-    # - Do some checks to make sure the fw is ok when unpacking & repacking(?)
+    # - Do some checks to make sure the fw is ok when unpacking & repacking (how?)
 
     def __init__(self, debug=0):
         logging.basicConfig(level=logging.WARNING,
