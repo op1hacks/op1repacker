@@ -99,7 +99,7 @@ class OP1Repack:
         # Calculate our CRC
         calced_crc = binascii.crc32(data)
         self.logger.debug('Adding checksum {} to {}'.format(calced_crc, path))
-        # Convert the intiger to binary with little endian
+        # Convert the integer to binary with little endian
         bin_crc = struct.pack('<L', calced_crc)
 
         # Write the new CRC with the data back to the file
@@ -125,10 +125,10 @@ class OP1Repack:
         self.logger.debug('Compressing {} with LZMA...'.format(target))
         with open(target, 'rb') as f:
             data = f.read()
-        # Getting these LZMA parameters right was a huge pain in the ass. I do not recommend touching them.
-        # The OP1 only accepts max 15mb firwmare files. But using agressive compression requires more ram to decompress.
-        # When using the most agressive preset 9, the OP1 fails to allocate enough RAM to perform the decompression.
-        # I found that these settings work pretty well. FW under 15mb and it installs fine.
+        # Getting these LZMA parameters right was a huge pain in the ass. I do not recommend touching them. The OP-1
+        # only accepts max 15mb firwmare files. But using agressive compression requires more ram to decompress.
+        # When using the most agressive preset 9, the OP-1 fails to allocate enough RAM to perform the decompression.
+        # I found that these settings work pretty well. FW is under 15mb and it installs fine.
         lzma_filters = [
             {'id': lzma.FILTER_LZMA1, 'preset': 9, 'lc': 3, 'lp': 1, 'pb': 2, 'dict_size': 2**23},
         ]
