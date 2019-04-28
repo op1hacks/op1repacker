@@ -11,7 +11,8 @@ version = re.search(
 
 files = [
     "assets/display/*.svg",
-    "assets/display/*.json"
+    "assets/display/*.json",
+    "assets/presets/*/*.aif",
 ]
 
 setup(name="op1repacker",
