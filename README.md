@@ -1,11 +1,12 @@
 # OP-1 Firmware Repacker
 
 *The* tool for unpacking and repacking OP-1 synthesizer firmware. It's based on
-the collective research we've done at the [operator-1.com custom firmware thread](https://www.operator-1.com/index.php?p=/discussion/2232/custom-firmware-on-the-op-1). This allows you to access and
-modify the files within the firmware as well as repacking the files into a
-valid installable firmware file. The tool also includes some modifications that
-can be automatically applied to the firmware. See [Modify](#modify) below for
-more information.
+the collective research we've done at the [op-forums.com custom firmware thread](https://op-forums.com/t/custom-firmware-on-the-op-1/4283/680). 
+This allows you to access and modify the files within the firmware as well as
+repacking the files into a valid installable firmware file. Ready made mods
+are also included in the tool (see [Modify](#modify)). Lastly it is also
+possible to analyze unpacked firmware to get information such as build version,
+build time and date, bootloader version etc.
 
  - Requires Python3
  - Tested on Linux, OS X and Windows 10
@@ -45,10 +46,27 @@ The same logic works for repacking, the new firmware file is saved in the same
 location, but the name will be `op1_218-repacked.op1`.
 
 
+### Analyze
+
+After unpacking a firmware file you can analyze the firmware directory.
+
+    op1repacker analyze [directory]
+
+Example output:
+
+    - FIRMWARE VERSION: R. 00235
+    - BUILD VERSION: 00235
+    - BUILD DATE: 2019/01/07
+    - BUILD TIME: 17:45:00
+    - BOOTLOADER VERSION: 2.18
+    - OLDEST FILE: 2017/05/02 12:11
+    - NEWEST FILE: 2019/04/25 12:06
+
+
 ### Modify
 
 The firmware can be automatically modified with some predefined mods.
-These have been tested on the firmware version 225.
+These have been tested on the firmware version 235.
 Currently available mods are:
 
  * iter
@@ -76,11 +94,12 @@ Currently available mods are:
 
  * gfx-tape-invert
 
-   > Move the tracks to the top in the tape screen to make them easier to see.
+   > Move the tracks to the top of the tape screen to make them much easier to see
+   > at certain angles.
 
  * gfx-cwo-moose
 
-   > Swap the cow in the CWO effect with a moose.
+   > Swap the cow in the CWO effect with a moose, because why not.
 
 
 
