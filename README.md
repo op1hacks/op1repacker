@@ -31,6 +31,10 @@ To install `op1repacker` run the following command:
 
     sudo pip3 install op1repacker
 
+And to upgrade to a new version:
+
+    sudo pip3 install op1repacker --upgrade
+
 
 ## Usage
 
