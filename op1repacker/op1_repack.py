@@ -69,7 +69,7 @@ class OP1Repack:
             self.logger.error("Given path isn't a directory: {}".format(input_path))
             return False
         root_path = os.path.dirname(path)
-        target_file = os.path.basename(input_path)
+        target_file = os.path.basename(os.path.normpath(input_path))
         compress_from = os.path.join(root_path, target_file)
         compress_to = os.path.join(root_path, target_file + self.repack_file_suffix)
         self.logger.debug('Repacking firmware from: {}'.format(compress_from))
