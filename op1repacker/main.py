@@ -46,6 +46,103 @@ valid values are:
 - gfx-tape-invert
 """
 
+# Path to the app location (NOT the firmware path)
+app_path = os.path.dirname(os.path.realpath(__file__))
+db_actions = ['iter', 'filter', 'subtle-fx', 'presets-iter']
+
+
+def unpack(repacker, target_path):
+    print('Unpacking {}...'.format(target_path))
+    if repacker.unpack(target_path):
+        print('Done!')
+    else:
+        print('Errors occured during unpacking!')
+
+
+def modify(repacker, target_path, mods):
+    if not os.path.isdir(target_path):
+        print('The path to modify must be a directory!')
+        return
+
+    # Only open the database for changes if at least one DB mod is selected
+    if set(db_actions) - (set(db_actions) - set(mods)):
+        db_path = os.path.abspath(os.path.join(target_path, 'content', 'op1_factory.db'))
+        db = op1_db.OP1DB()
+        db.open(db_path)
+
+        print("Running database modifications:")
+
+        if 'iter' in mods:
+            print('- Enabling "iter" synth...')
+            if not db.enable_iter():
+                print('    Failed to enable "iter". Maybe it\'s already enabled?')
+
+        if 'presets-iter' in mods:
+            print('- Adding community presets for iter:')
+            if not db.synth_preset_folder_exists('iter'):
+                iter_preset_path = os.path.join(app_path, 'assets', 'presets', 'iter')
+                patches = op1_patches.load_patch_folder(iter_preset_path)
+
+                for patch in patches:
+                    print('    - ' + patch['name'])
+                    patch_data = json.dumps(patch)
+                    db.insert_synth_preset(patch_data, 'iter')
+            else:
+                print('    Iter already has presets, not adding new ones.')
+
+        if 'filter' in mods:
+            print('- Enabling "filter" effect...')
+            if not db.enable_filter():
+                print('    Failed to enable "filter". Maybe it\'s already enabled?')
+
+        if 'subtle-fx' in mods:
+            print('- Modifying FX defaults to be less intensive...')
+            if not db.enable_subtle_fx_defaults():
+                print('    Failed to modify default parameters for effects!')
+
+        # Commit changes to sqlite file
+        if not db.commit():
+            print('Errors occured while modifying database!')
+
+        print('')
+
+    # Custom GFX
+    gfx_mods = filter(lambda opt: opt.startswith('gfx-'), mods)
+    if gfx_mods:
+        print("Running graphics modifications:")
+    for mod in gfx_mods:
+        if mod == 'gfx-iter-lab':
+            print('- Enabling custom lab graphic for iter...')
+            path_from = os.path.join(app_path, 'assets', 'display', 'iter-lab.svg')
+            path_to = os.path.abspath(os.path.join(target_path, 'content', 'display', 'iter.svg'))
+            copyfile(path_from, path_to)
+        else:
+            patch_name = mod[4:]
+            patch_path = os.path.join(app_path, 'assets', 'display', patch_name + '.patch.json')
+            if not os.path.exists(patch_path):
+                print('    GFX patch "{}" doesn\'t exist!'.format(patch_name))
+                continue
+
+            print('- Applying GFX patch "{}"...'.format(patch_name))
+            result = op1_gfx.patch_image_file(target_path, patch_path)
+            if not result:
+                print('    Failed to apply patch! Maybe the patch is already applied?')
+
+    print('')
+    print('Done.')
+
+
+def repack(repacker, target_path):
+    if not os.path.isdir(target_path):
+        print('The path to repack must be a directory!')
+        return
+
+    print('Repacking {}...'.format(target_path))
+    if repacker.repack(target_path):
+        print('Done!')
+    else:
+        print('Errors occured during repacking!')
+
 
 def main():
     parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
@@ -59,10 +156,6 @@ def main():
     args = parser.parse_args()
 
     repacker = op1_repack.OP1Repack(debug=args.debug)
-
-    # Path to the app location (NOT the firmware path)
-    app_path = os.path.dirname(os.path.realpath(__file__))
-    db_actions = ['iter', 'filter', 'subtle-fx', 'presets-iter']
 
     for target_path in args.path:
         if not os.path.exists(target_path):
@@ -83,15 +176,7 @@ def main():
 
         # Repack
         if args.action == 'repack':
-            if not os.path.isdir(target_path):
-                print('The path to repack must be a directory!')
-                return
-
-            print('Repacking {}...'.format(target_path))
-            if repacker.repack(target_path):
-                print('Done!')
-            else:
-                print('Errors occured during repacking!')
+            repack(repacker, target_path)
 
         # Unpack
         elif args.action == 'unpack':
@@ -101,89 +186,14 @@ def main():
 
             if not target_path.endswith('.op1'):
                 print('That doesn\'t seem to be a firmware file. The extension must be ".op1".')
-
-            print('Unpacking {}...'.format(target_path))
-            if repacker.unpack(target_path):
-                print('Done!')
-            else:
-                print('Errors occured during unpacking!')
+            unpack(repacker, target_path)
 
         # Modify
         elif args.action == 'modify':
-            if not os.path.isdir(target_path):
-                print('The path to modify must be a directory!')
-                return
-
             if not args.options:
                 print('Please specify what modifications to make with --options argument.')
                 return
-
-            # Only open the database for changes if at least one DB mod is selected
-            if set(db_actions) - (set(db_actions) - set(args.options)):
-                db_path = os.path.abspath(os.path.join(target_path, 'content', 'op1_factory.db'))
-                db = op1_db.OP1DB()
-                db.open(db_path)
-
-                print("Running database modifications:")
-
-                if 'iter' in args.options:
-                    print('- Enabling "iter" synth...')
-                    if not db.enable_iter():
-                        print('    Failed to enable "iter". Maybe it\'s already enabled?')
-
-                if 'presets-iter' in args.options:
-                    print('- Adding community presets for iter:')
-                    if not db.synth_preset_folder_exists('iter'):
-                        iter_preset_path = os.path.join(app_path, 'assets', 'presets', 'iter')
-                        patches = op1_patches.load_patch_folder(iter_preset_path)
-
-                        for patch in patches:
-                            print('    - ' + patch['name'])
-                            patch_data = json.dumps(patch)
-                            db.insert_synth_preset(patch_data, 'iter')
-                    else:
-                        print('    Iter already has presets, not adding new ones.')
-
-                if 'filter' in args.options:
-                    print('- Enabling "filter" effect...')
-                    if not db.enable_filter():
-                        print('    Failed to enable "filter". Maybe it\'s already enabled?')
-
-                if 'subtle-fx' in args.options:
-                    print('- Modifying FX defaults to be less intensive...')
-                    if not db.enable_subtle_fx_defaults():
-                        print('    Failed to modify default parameters for effects!')
-
-                # Commit changes to sqlite file
-                if not db.commit():
-                    print('Errors occured while modifying database!')
-
-                print('')
-
-            # Custom GFX
-            gfx_mods = filter(lambda opt: opt.startswith('gfx-'), args.options)
-            if gfx_mods:
-                print("Running graphics modifications:")
-            for mod in gfx_mods:
-                if mod == 'gfx-iter-lab':
-                    print('- Enabling custom lab graphic for iter...')
-                    path_from = os.path.join(app_path, 'assets', 'display', 'iter-lab.svg')
-                    path_to = os.path.abspath(os.path.join(target_path, 'content', 'display', 'iter.svg'))
-                    copyfile(path_from, path_to)
-                else:
-                    patch_name = mod[4:]
-                    patch_path = os.path.join(app_path, 'assets', 'display', patch_name + '.patch.json')
-                    if not os.path.exists(patch_path):
-                        print('    GFX patch "{}" doesn\'t exist!'.format(patch_name))
-                        continue
-
-                    print('- Applying GFX patch "{}"...'.format(patch_name))
-                    result = op1_gfx.patch_image_file(target_path, patch_path)
-                    if not result:
-                        print('    Failed to apply patch! Maybe the patch is already applied?')
-
-            print('')
-            print('Done.')
+            modify(repacker, target_path, args.options)
 
 
 if __name__ == '__main__':
