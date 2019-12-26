@@ -72,7 +72,7 @@ def main():
         # Analyze
         if args.action == 'analyze':
             if not os.path.isdir(target_path):
-                print('The path to analyze must be a directory!')
+                print('The path to analyze must be a directory! Unpack the firmware file first.')
                 return
             print('Analyzing {}...'.format(target_path))
             data = op1_analyze.analyze_unpacked_fw(target_path)

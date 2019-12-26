@@ -128,7 +128,7 @@ class OP1Repack:
         # Getting these LZMA parameters right was a huge pain in the ass. I do not recommend touching them. The OP-1
         # only accepts max 15mb firwmare files. But using agressive compression requires more ram to decompress.
         # When using the most agressive preset 9, the OP-1 fails to allocate enough RAM to perform the decompression.
-        # I found that these settings work pretty well. FW is under 15mb and it installs fine.
+        # I found that these settings work pretty well. The resulting firmware is under 15mb and it installs fine.
         lzma_filters = [
             {'id': lzma.FILTER_LZMA1, 'preset': 9, 'lc': 3, 'lp': 1, 'pb': 2, 'dict_size': 2**23},
         ]
@@ -146,7 +146,11 @@ class OP1Repack:
         """Compresses path into the target TAR file."""
         self.logger.debug('Repacking to TAR from {} to: {}'.format(path, target))
         files = os.listdir(path)
-        tar = tarfile.open(target, 'w')
+        tar = tarfile.open(
+            target,
+            'w',
+            format=tarfile.GNU_FORMAT
+        )
         for file in files:
             if file.startswith('.'):
                 continue
