@@ -6,6 +6,7 @@
 
 import os
 import tkinter
+from tkinter import ttk
 from op1repacker.main import unpack, repack, modify
 from op1repacker import op1_repack
 from tkinter import filedialog, messagebox
@@ -246,6 +247,11 @@ class MainWindow(tkinter.Tk):
         self.create_fw_button_text = tkinter.StringVar()
         self.create_fw_button_text.set("Create Custom FW")
 
+
+        self.style = ttk.Style(self)
+        self.style.theme_use('clam')
+        self.style.configure("my.TButton", bordercolor="red")
+
     def dragwin(self, event):
         x = self.winfo_pointerx() - self._offsetx
         y = self.winfo_pointery() - self._offsety
@@ -337,19 +343,22 @@ class MainWindow(tkinter.Tk):
             )
         )
         step_1_container.grid(row=0, column=0, sticky="NWE")
-        select_file_button = tkinter.Button(
+        select_file_button = ttk.Button(
             step_1_container,
             text="Select Firmware File",
             command=self.select_file,
-            background=style["window"]["bg"],
-            foreground=style["color"]["white"]["light"],
-            activeforeground=style["color"]["white"]["light"],
-            activebackground=style["color"]["white"]["dark"],
-            highlightcolor=style["color"]["white"]["light"],
-            highlightbackground=style["color"]["white"]["light"],
-            highlightthickness=style["border-width"],
-            font=style["font"],
-            relief=style["relief"],
+            #background=style["window"]["bg"],
+            #foreground=style["color"]["white"]["light"],
+            #activeforeground=style["color"]["white"]["light"],
+            #activebackground=style["color"]["white"]["dark"],
+            #highlightcolor=style["color"]["white"]["light"],
+            #highlightbackground=style["color"]["white"]["light"],
+            #highlightthickness=style["border-width"],
+            #bd=2,
+            #font=style["font"],
+            #bordercolor="red",
+            #relief=style["relief"],
+            style="my.TButton"
         )
         select_file_button.pack(fill=tkinter.X, pady=5)
         self.target_label = tkinter.Label(
