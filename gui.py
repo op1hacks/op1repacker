@@ -96,6 +96,7 @@ def default_attributes_label(**attr):
 
 
 class AnimatedCanvas:
+    # TODO: Make this a loading spinner
     def __init__(self, parent, state=0, label=""):
         self.parent = parent
         self.width = 50
@@ -313,54 +314,31 @@ class MainWindow(tkinter.Tk):
         self.destroy()
 
     def setup_window(self):
-        main_frame = tkinter.Frame(
+        root_frame = tkinter.Frame(
             self,
             **default_attributes(
                 padx=10*style["scale"],
                 pady=10*style["scale"],
-            )
+            ),
         )
 
-        left_frame = tkinter.Frame(
-            main_frame,
+        main_frame = tkinter.Frame(
+            root_frame,
             relief=style["relief"],
             background=style["window"]["bg"],
         )
 
         # Step 1
-        step_1_left = tkinter.Frame(
-            left_frame,
+        step_1_container = tkinter.Frame(
+            main_frame,
             **default_attributes(
                 padx=10*style["scale"],
                 pady=10*style["scale"],
             )
         )
-        step_1_right = tkinter.Frame(
-            left_frame,
-            **default_attributes(
-                padx=10*style["scale"],
-                pady=10*style["scale"],
-            )
-        )
-        step_1_left.grid(row=0, column=0, sticky="N")
-        step_1_right.grid(row=0, column=1, sticky="NWE")
-        step_1_title = tkinter.Label(
-            step_1_left,
-            text="STEP #1",
-            **default_attributes_label(
-                font=("monospace", 20),
-                padx=10*style["scale"],
-            )
-        )
-        step_1_descr = tkinter.Label(
-            step_1_left,
-            text="Choose the original firmware\nfile you want to modify.",
-            **default_attributes_label()
-        )
-        step_1_title.pack(fill=tkinter.X, pady=5, anchor="nw")
-        step_1_descr.pack(fill=tkinter.X, pady=5, anchor="nw")
+        step_1_container.grid(row=0, column=0, sticky="NWE")
         select_file_button = tkinter.Button(
-            step_1_right,
+            step_1_container,
             text="Select Firmware File",
             command=self.select_file,
             background=style["window"]["bg"],
@@ -375,7 +353,7 @@ class MainWindow(tkinter.Tk):
         )
         select_file_button.pack(fill=tkinter.X, pady=5)
         self.target_label = tkinter.Label(
-            step_1_right,
+            step_1_container,
             text="No File Selected",
             justify=tkinter.CENTER,
             **default_attributes_label(
@@ -384,82 +362,32 @@ class MainWindow(tkinter.Tk):
         self.target_label.pack(fill=tkinter.X, pady=5)
 
         # Step 2
-        step_2_left = tkinter.Frame(
-            left_frame,
-            **default_attributes(
-                padx=10*style["scale"],
-                pady=10*style["scale"],
-            )
-        )
-        step_2_title = tkinter.Label(
-            step_2_left,
-            text="STEP #2",
-            font=("monospace", 20),
-            background=style["window"]["bg"],
-            foreground=style["color"]["white"]["light"],
-        )
-        step_2_descr = tkinter.Label(
-            step_2_left,
-            text="Choose your mods.",
-            font="monospace",
-            background=style["window"]["bg"],
-            foreground=style["color"]["white"]["light"],
-        )
-        step_2_title.pack(fill=tkinter.X, pady=5, anchor="nw")
-        step_2_descr.pack(fill=tkinter.X, pady=5, anchor="nw")
-
-        step_2_right = tkinter.Frame(
-            left_frame,
+        step_2_container = tkinter.Frame(
+            main_frame,
             relief=style["relief"],
             background=style["window"]["bg"],
             padx=10*style["scale"],
             pady=10*style["scale"],
         )
-        step_2_left.grid(row=1, column=0, sticky="N")
-        step_2_right.grid(row=1, column=1, sticky="N")
+        step_2_container.grid(row=1, column=0, sticky="N")
 
-        checboxes = self.setup_mod_selector(step_2_right)
+        checboxes = self.setup_mod_selector(step_2_container)
         checboxes.pack(fill=tkinter.X, pady=5)
 
-        # test = AnimatedCanvas(left_frame)
+        # test = AnimatedCanvas(main_frame)
         # test.widget.pack()
 
-        step_3_left = tkinter.Frame(
-            left_frame,
+        step_3_container = tkinter.Frame(
+            main_frame,
             relief=style["relief"],
             background=style["window"]["bg"],
             padx=10*style["scale"],
             pady=10*style["scale"],
         )
-        step_3_title = tkinter.Label(
-            step_3_left,
-            text="STEP #3",
-            font=("monospace", 20),
-            background=style["window"]["bg"],
-            foreground=style["color"]["white"]["light"],
-        )
-        step_3_descr = tkinter.Label(
-            step_3_left,
-            text="Create your new custom firmware.",
-            font="monospace",
-            background=style["window"]["bg"],
-            foreground=style["color"]["white"]["light"],
-        )
-        step_3_title.pack(fill=tkinter.X, pady=5, anchor="nw")
-        step_3_descr.pack(fill=tkinter.X, pady=5, anchor="nw")
-
-        step_3_right = tkinter.Frame(
-            left_frame,
-            relief=style["relief"],
-            background=style["window"]["bg"],
-            padx=10*style["scale"],
-            pady=10*style["scale"],
-        )
-        step_3_left.grid(row=2, column=0, sticky="N")
-        step_3_right.grid(row=2, column=1, sticky="NWE")
+        step_3_container.grid(row=2, column=0, sticky="NWE")
 
         self.create_fw_button = tkinter.Button(
-            step_3_right,
+            step_3_container,
             textvariable=self.create_fw_button_text,
             command=self.run_repacker,
             background=style["window"]["bg"],
@@ -471,7 +399,6 @@ class MainWindow(tkinter.Tk):
             highlightthickness=style["border-width"],
             font=style["font"],
             relief=style["relief"],
-            # state=tkinter.DISABLED  # TODO
         )
 
         self.create_fw_button.pack(
@@ -480,7 +407,7 @@ class MainWindow(tkinter.Tk):
         )
 
         exit_button = tkinter.Button(
-            step_3_right, text="Exit", command=self.exit,
+            step_3_container, text="Exit", command=self.exit,
             background=style["window"]["bg"],
             foreground=style["color"]["red"]["light"],
             activeforeground=style["color"]["red"]["light"],
@@ -497,8 +424,8 @@ class MainWindow(tkinter.Tk):
             pady=5,
         )
 
-        left_frame.pack(side=tkinter.RIGHT)
-        main_frame.pack()
+        main_frame.pack(side=tkinter.RIGHT)
+        root_frame.pack()
 
     def setup_mod_selector(self, parent):
         checkbox_frame = tkinter.Frame(
