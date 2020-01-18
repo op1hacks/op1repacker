@@ -29,11 +29,11 @@ using custom firmware. Everything you do with this is at your own risk!
 
 To install `op1repacker` run the following command:
 
-    sudo pip3 install op1repacker
+    pip3 install --user op1repacker
 
 And to upgrade to a new version:
 
-    sudo pip3 install op1repacker --upgrade
+    pip3 install --user --upgrade op1repacker 
 
 
 ## Usage
