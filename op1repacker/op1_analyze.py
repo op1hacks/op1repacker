@@ -53,9 +53,8 @@ def analyze_fs(target):
     oldest = None
     newest = None
     for root, dirs, files in os.walk(target):
-        path = root.split(os.sep)
         for file in files:
-            file_path = os.path.join(*path, file)
+            file_path = os.path.join(root, file)
             mtime = os.path.getmtime(file_path)
             if oldest is None or mtime < oldest:
                 oldest = mtime
