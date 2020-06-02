@@ -1,6 +1,22 @@
 Change Log
 ==========
 
+## [v0.2.5](https://github.com/op1hacks/op1repacker/tree/v0.2.5) (2020-06-03) compared to previous master branch.
+[Full Changelog](https://github.com/op1hacks/op1repacker/compare/v0.2.4...v0.2.5)
+
+**Bugs fixed:**
+
+- Fixed using absolute path when analyzing firmware (bug #33).
+
+
+## [v0.2.4](https://github.com/op1hacks/op1repacker/tree/v0.2.4) (2019-12-26) compared to previous master branch.
+[Full Changelog](https://github.com/op1hacks/op1repacker/compare/v0.2.3...v0.2.4)
+
+**Bugs fixed:**
+
+- Fixed tar archive format for Python 3.8.
+
+
 ## [v0.2.3](https://github.com/op1hacks/op1repacker/tree/v0.2.3) (2019-08-18) compared to previous master branch.
 [Full Changelog](https://github.com/op1hacks/op1repacker/compare/v0.2.2...v0.2.3)
 
