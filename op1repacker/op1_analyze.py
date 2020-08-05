@@ -38,7 +38,7 @@ def analyze_main_ldr(target):
     date_arr = re.findall(r'\d\d\d\d/\d\d/\d\d', chunk)
     time_arr = re.findall(r'\d\d:\d\d:\d\d', chunk)
 
-    fw_version = re.findall(rb'R\..\d\d\d\d?\d?', data)
+    fw_version = re.findall(br'R\..\d\d\d\d?\d?', data)
     fw_version = UNKNOWN_VALUE if not fw_version else fw_version[0].decode('utf-8')
 
     return {
