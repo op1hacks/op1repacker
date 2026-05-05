@@ -105,6 +105,14 @@ Currently available mods are:
 
    > Swap the cow in the CWO effect with a moose, because why not.
 
+ * gfx-cwo-cat
+
+   > Swap the cow in the CWO effect with a cat, contributed by [baktak](https://github.com/baktak).
+
+ * gfx-cwo-dog
+
+   > Swap the cow in the CWO effect with a dog, contributed by [baktak](https://github.com/baktak).
+
 
 
 To enable a mod, first unpack the firmware, then run the following command
