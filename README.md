@@ -117,13 +117,16 @@ Currently available mods are:
 
 To enable a mod, first unpack the firmware, then run the following command
 (replace mod_name with the mod you want and [directory] with the location
-of the unpacked firmware) and repack the firmware after that.
+of the unpacked firmware) and repack the firmware after that. You can
+specify multiple mods separated by a space to apply them all at once.
 
     op1repacker modify [directory] --options mod_name
 
-For example, to enable all mods run this command:
+    op1repacker modify [directory] --options mod_name_1 mod_name_2
 
-    op1repacker modify [directory] --options iter presets-iter filter subtle-fx gfx-iter-lab gfx-tape-invert gfx-cwo-moose
+To enable all default mods run this command:
+
+    op1repacker modify [directory] --options defaults
 
 More modifications might be added later.
 

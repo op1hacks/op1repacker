@@ -35,8 +35,19 @@ actions_help = """action to perform on the firmware
 
 """
 
-options_help = """changes to make on the unpacked firmware to enable mods and hidden features
+DEFAULT_MODS = [
+    'iter',
+    'presets-iter',
+    'filter',
+    'subtle-fx',
+    'gfx-iter-lab',
+    'gfx-tape-invert',
+    'gfx-cwo-moose'
+]
+
+options_help = f"""changes to make on the unpacked firmware to enable mods and hidden features
 valid values are:
+- defaults (enables default mods: {', '.join(DEFAULT_MODS)})
 - iter
 - presets-iter
 - filter
@@ -47,7 +58,6 @@ valid values are:
 - gfx-cwo-cat
 - gfx-tape-invert
 """
-
 
 def main():
     parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
@@ -120,20 +130,30 @@ def main():
                 print('Please specify what modifications to make with --options argument.')
                 return
 
+            # Support a "defaults" option that applies all suggested mods
+            options = args.options
+            if "defaults" in options:
+                if (len(options) > 1):
+                    print('The "defaults" option cannot be combined with other options!')
+                    return
+                print('Enabled default modifications: ' + ', '.join(DEFAULT_MODS))
+                options = DEFAULT_MODS
+
             # Only open the database for changes if at least one DB mod is selected
-            if set(db_actions) - (set(db_actions) - set(args.options)):
+            db_mods_selected = set(db_actions) & set(options)
+            if db_mods_selected:
                 db_path = os.path.abspath(os.path.join(target_path, 'content', 'op1_factory.db'))
                 db = op1_db.OP1DB()
                 db.open(db_path)
 
                 print("Running database modifications:")
 
-                if 'iter' in args.options:
+                if 'iter' in options:
                     print('- Enabling "iter" synth...')
                     if not db.enable_iter():
                         print('    Failed to enable "iter". Maybe it\'s already enabled?')
 
-                if 'presets-iter' in args.options:
+                if 'presets-iter' in options:
                     print('- Adding community presets for iter:')
                     if not db.synth_preset_folder_exists('iter'):
                         iter_preset_path = os.path.join(app_path, 'assets', 'presets', 'iter')
@@ -146,12 +166,12 @@ def main():
                     else:
                         print('    Iter already has presets, not adding new ones.')
 
-                if 'filter' in args.options:
+                if 'filter' in options:
                     print('- Enabling "filter" effect...')
                     if not db.enable_filter():
                         print('    Failed to enable "filter". Maybe it\'s already enabled?')
 
-                if 'subtle-fx' in args.options:
+                if 'subtle-fx' in options:
                     print('- Modifying FX defaults to be less intensive...')
                     if not db.enable_subtle_fx_defaults():
                         print('    Failed to modify default parameters for effects!')
@@ -163,7 +183,7 @@ def main():
                 print('')
 
             # Custom GFX
-            gfx_mods = filter(lambda opt: opt.startswith('gfx-'), args.options)
+            gfx_mods = filter(lambda opt: opt.startswith('gfx-'), options)
             if gfx_mods:
                 print("Running graphics modifications:")
             for mod in gfx_mods:
