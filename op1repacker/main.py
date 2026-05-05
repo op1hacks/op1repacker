@@ -43,6 +43,8 @@ valid values are:
 - subtle-fx
 - gfx-iter-lab
 - gfx-cwo-moose
+- gfx-cwo-dog
+- gfx-cwo-cat
 - gfx-tape-invert
 """
 
